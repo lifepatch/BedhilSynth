@@ -1,19 +1,19 @@
 #ifndef HARDWARE_SETUP
 #define HARDWARE_SETUP
 
-#include "debounce_lib.h"
-
 
 volatile uint8_t hw_adc1 = _BV(ADLAR) | _BV(MUX0); //PB2-ADC1 pot2
 volatile uint8_t hw_adc2 = _BV(ADLAR) | _BV(MUX1); //PB4-ADC2 pot1
+volatile uint8_t pot1; // 0...255
+volatile uint8_t pot2; // 0...255
 
 
-// ATTINY85 8BitMixtapeDj pin
+// ATTINY85 BedhilLaserSynth pin
 //
 //                               +-\/-+
 //  Ain0           (D  5)  PB5  1|    |8   VCC
 //  Ain3           (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1 ====> pot2
-// pot1 ===> Ain2  (D  4)  PB4  3|    |6   PB1  (D  1)        pwm1
+// Piezo Input     (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
 //                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A / sound output
 //                               +----+
 
@@ -22,14 +22,13 @@ static inline void hw_set_output_pin()
     //DDRB |= 1<<DDB4; //set PB4 as output
     //PORTB &= ~(1 << PB4); //set PB4 output 0
 
-    //DDRB |= 1<<DDB1; //set PB1 as output
-    //PORTB &= ~(1 << PB1); //set PB1 output 0
+    DDRB |= 1<<PB1; //set PB1 as output
+    PORTB &= ~(1 << PB1); //set PB1 output 1
+
 
     DDRB |= 1<<DDB0; //set PB0 as output
     PORTB &= ~(1 << PB0); //set PB0 output 0
 
-
-    btn_debounce_init();
 
 }
 
@@ -97,16 +96,24 @@ static inline void hw_enable_timer0()
 
 static inline void hw_setup_timer0_pwm()
 {
-    //PWM SOUND OUTPUT MODE [change this]
+//    //PWM SOUND OUTPUT MODE [change this]
+//    TCCR0A |= (1<<WGM00)|(1<<WGM01); //Fast pwm
+//    //TCCR0A |= (1<<WGM00) ; //Phase correct pwm
+//    //PWM SETTINGS [leave this settings]
+////    TCCR0A |= (1<<COM0A1); //Clear OC0A/OC0B on Compare Match when up-counting.
+////    TCCR0B |= (1<<CS00);//no prescale
+
+//    //from ref website, this enable OCR0B
+//    TCCR0A = 2<<COM0A0 | 2<<COM0B0 | 3<<WGM00;
+//    TCCR0B = 0<<WGM02 | 1<<CS00;
+
+    //PWM SOUND OUTPUT
     TCCR0A |= (1<<WGM00)|(1<<WGM01); //Fast pwm
     //TCCR0A |= (1<<WGM00) ; //Phase correct pwm
-    //PWM SETTINGS [leave this settings]
-//    TCCR0A |= (1<<COM0A1); //Clear OC0A/OC0B on Compare Match when up-counting.
-//    TCCR0B |= (1<<CS00);//no prescale
+    TCCR0A |= (1<<COM0A1); //Clear OC0A/OC0B on Compare Match when up-counting.
+    TCCR0B |= (1<<CS00);//no prescale
 
-    //from ref website, this enable OCR0B
-    TCCR0A = 2<<COM0A0 | 2<<COM0B0 | 3<<WGM00;
-    TCCR0B = 0<<WGM02 | 1<<CS00;
+
 }
 
 static inline void hw_adc_init()
@@ -149,6 +156,36 @@ static inline void hw_init()
     //start adc conversion
     hw_adc_start();
 }
+
+
+
+//handle adc conversion
+//ATtiny25/45/85 [DATASHEET] page 48 vector 9
+ISR(ADC_vect)
+{
+    //http://joehalpin.wordpress.com/2011/06/19/multi-channel-adc-with-an-attiny85/
+
+    static uint8_t firstTime = 1;
+    static uint8_t val;
+
+    val = ADCH;
+
+    if (firstTime == 1)
+        firstTime = 0;
+    else if (ADMUX  == hw_adc1)
+        {
+            pot1 = val;
+            ADMUX = hw_adc2;
+        }
+    else if ( ADMUX == hw_adc2)
+        {
+            pot2  = val;
+            ADMUX = hw_adc1;
+        }
+
+}
+
+
 
 #endif // HARDWARE_SETUP
 

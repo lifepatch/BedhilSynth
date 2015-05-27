@@ -22,9 +22,13 @@ DEVICE		= attiny85
 CLOCK		= 16500000
 
 #PROGRAMMER
-PROGRAMMER	= stk500v1
+
+PROGRAMMER = usbasp -B4
+SERIAL_DEVICE = usb
+
+#PROGRAMMER	= stk500v1
 #SERIAL_DEVICE = /dev/cu.usbserial-A60062Vz
-SERIAL_DEVICE   =  /dev/cu.usbserial-A5029U9R
+#SERIAL_DEVICE   =  /dev/cu.usbserial-A5029U9R
 BAUDRATE	= 19200
 
 # For computing fuse byte values for other devices and options see

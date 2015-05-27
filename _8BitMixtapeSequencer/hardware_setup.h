@@ -23,7 +23,7 @@ static inline void hw_set_output_pin()
     //PORTB &= ~(1 << PB4); //set PB4 output 0
 
     DDRB |= 1<<PB1; //set PB1 as output
-    PORTB &= ~(1 << PB1); //set PB1 output 1
+    PORTB &= ~(1 << PB1); //set PB1 output 0
 
 
     DDRB |= 1<<DDB0; //set PB0 as output

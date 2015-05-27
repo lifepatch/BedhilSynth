@@ -22,7 +22,7 @@ volatile unsigned long t; // long
 
 volatile uint8_t snd; // 0...255
 
-
+volatile uint8_t play = 0;
 
 int main(void)
 {
@@ -39,10 +39,11 @@ int main(void)
 
             if(pot1 > 20)
             {
+                play = 1;
                 PORTB |= (1 << PB1); //set PB1 output 1
-                _delay_ms(500);
+                _delay_ms(25);
+                play = 0;
             }else{
-
                 PORTB &= ~(1 << PB1); //set PB1 output 0
             }
 
@@ -57,8 +58,14 @@ int main(void)
 //PWM SUSTAIN TIMER freq = 10000 Hz
 ISR(TIMER1_COMPA_vect)
 {
-
-    OCR0A = pot1;
+    if (play > 0)
+    {
+        snd = (3*5&t>>7)|(t*12&t>>10);
+        OCR0A = snd;
+        t++;
+    }else{
+        OCR0A = 0;
+    }
 }
 
 

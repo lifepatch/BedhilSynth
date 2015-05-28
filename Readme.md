@@ -2,7 +2,6 @@
 
 Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 
-![stepseq](https://raw.githubusercontent.com/8BitMixtape/sequencer_lib/master/examples/8BitMixtapeSequencer/breadboard_bb.png)
 
 ## Install
 
@@ -10,8 +9,6 @@ Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 2. From Arduino Ide choose Tools > Boards > **ATtiny85 @ 16Mhz (internal PLL; 4.3 V BOD)**
 3. Tools > Burn Bootloader
 4. Upload Sketch
-
-
 
 
 ## Pin Configuration

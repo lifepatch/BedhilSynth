@@ -40,11 +40,11 @@ int main(void)
             if(pot2 > 20)
             {
                 play = 1;
-                PORTB |= (1 << PB1); //set PB1 output 1
+                PORTB |= (1 << PB3); //set PB3 output 1
                 _delay_ms(25);
                 play = 0;
             }else{
-                PORTB &= ~(1 << PB1); //set PB1 output 0
+                PORTB &= ~(1 << PB3); //set PB3 output 0
             }
 
         }

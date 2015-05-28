@@ -19,7 +19,7 @@ Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 //                               +-\/-+
 //  Ain0           (D  5)  PB5  1|    |8   VCC
 //  laser out PB3  (D  3)  PB3  2|    |7   PB2  (D  2)  Piezo Input / pot2
-//  Pot1           (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
+//  Pot1           (D  4)  PB4  3|    |6   PB1  (D  1)
 //                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A / sound output
 //                               +----+
 //

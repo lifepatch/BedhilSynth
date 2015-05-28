@@ -3,3 +3,4 @@ _8BitMixtapeSequencer/_8BitMixtapeSequencer.ino
 ../../sequencer_lib.h
 _8BitMixtapeSequencer/hardware_setup.h
 _8BitMixtapeSequencer/debounce_lib.h
+Readme.md

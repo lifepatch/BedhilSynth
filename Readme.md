@@ -1,6 +1,6 @@
-# 8BitMixtapeSequencer
+# BedhilSynth
 
-Sequencer version of 8BitMixtape and example of sequencer_lib
+Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 
 ![stepseq](https://raw.githubusercontent.com/8BitMixtape/sequencer_lib/master/examples/8BitMixtapeSequencer/breadboard_bb.png)
 
@@ -13,15 +13,15 @@ Sequencer version of 8BitMixtape and example of sequencer_lib
 
 
 
-
 ## Pin Configuration
 
 ``` c
+// ATTINY85 BedhilLaserSynth pin
 //
 //                               +-\/-+
 //  Ain0           (D  5)  PB5  1|    |8   VCC
-//  BUTTON_2  ===> (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1 ====> pot2
-// pot1 ===> Ain2  (D  4)  PB4  3|    |6   PB1  (D  1)   <=== BUTTON_1
-//                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A /speaker
-//                               +----+
+//  Ain3           (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1 ====> pot2
+// Piezo Input     (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
+//                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A / sound output
+//                               +----+                            +----+
 ```

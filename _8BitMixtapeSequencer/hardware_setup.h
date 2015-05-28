@@ -12,18 +12,23 @@ volatile uint8_t pot2; // 0...255
 //
 //                               +-\/-+
 //  Ain0           (D  5)  PB5  1|    |8   VCC
-//  Ain3           (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1 ====> pot2
-// Piezo Input     (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
+//  laser out PB3  (D  3)  PB3  2|    |7   PB2  (D  2)  Piezo Input / pot2
+//  Pot1           (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
 //                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A / sound output
 //                               +----+
+//
+//  Clock Frequency 16 Mhz PLL Internal
+//  Timer1 running @ 8 Khz for sound output
+//  PWM @ PB0 - OCR0A
+//
 
 static inline void hw_set_output_pin()
 {
     //DDRB |= 1<<DDB4; //set PB4 as output
     //PORTB &= ~(1 << PB4); //set PB4 output 0
 
-    DDRB |= 1<<PB1; //set PB1 as output
-    PORTB &= ~(1 << PB1); //set PB1 output 0
+    DDRB |= 1<<PB3; //set PB3 as output
+    PORTB &= ~(1 << PB3); //set PB3 output 0
 
 
     DDRB |= 1<<DDB0; //set PB0 as output
@@ -69,7 +74,7 @@ static inline void hw_set_timer1()
     //TCCR1 |= _BV(CS10) | _BV(CS13); // prescale 256
 
     //When the CTC1 control bit is set (one), Timer/Counter1 is reset to $00 in the CPU clock cycle after a compare match with OCR1C register value
-    OCR1C = 100;
+    OCR1C = 125; //8Khz
     //OCR1B = 22;
 
     //OCR1C = 125;  // (16000000/16)/8000 = 125

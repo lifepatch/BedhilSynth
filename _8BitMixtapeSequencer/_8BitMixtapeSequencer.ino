@@ -37,7 +37,7 @@ int main(void)
 //         PORTB ^= (1 << PB1);
 //         _delay_ms(500);
 
-            if(pot1 > 20)
+            if(pot2 > 20)
             {
                 play = 1;
                 PORTB |= (1 << PB1); //set PB1 output 1

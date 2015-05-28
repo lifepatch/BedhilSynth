@@ -13,6 +13,7 @@ Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 
 
 
+
 ## Pin Configuration
 
 ``` c
@@ -20,8 +21,13 @@ Kode dan skematik untuk karya Lifepatch di ArtJog 2015
 //
 //                               +-\/-+
 //  Ain0           (D  5)  PB5  1|    |8   VCC
-//  Ain3           (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1 ====> pot2
-// Piezo Input     (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
+//  laser out PB3  (D  3)  PB3  2|    |7   PB2  (D  2)  Piezo Input / pot2
+//  Pot1           (D  4)  PB4  3|    |6   PB1  (D  1)        Laser Output
 //                         GND  4|    |5   PB0  (D  0)        pwm0 ====> OCR0A / sound output
-//                               +----+                            +----+
+//                               +----+
+//
+//  Clock Frequency 16 Mhz PLL Internal
+//  Timer1 running @ 8 Khz for sound output
+//  PWM @ PB0 - OCR0A
+//                            +----+                            +----+
 ```
